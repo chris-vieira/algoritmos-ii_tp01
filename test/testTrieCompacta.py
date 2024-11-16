@@ -5,7 +5,7 @@ from trieCompacta import *
 
 trie = TrieCompacta()
 print("--- Trie Compacta ---")
-print("Raiz:")
+print("Raiz")
 print(str(trie.raiz.chave) + ": " + str(trie.raiz.valor))
 
 trie.raiz.filhos.append(No('by', [22]))
@@ -20,17 +20,39 @@ trie.raiz.filhos.append(No('the', [24]))
 
 
 for i in range(0, trie.raiz.filhos.__len__()):
-    print("Filho " + str(i) + ":")
+    print("Filho " + str(i) )
     print(str(trie.raiz.filhos[i].chave) + ": " + str(trie.raiz.filhos[i].valor))
     if trie.raiz.filhos[i].filhos.__len__() > 0:
         for j in range(0, trie.raiz.filhos[i].filhos.__len__()):
-            print("Filho " + str(i) + str(j) + ":")
+            print("Filho " + str(i) + str(j))
             print(str(trie.raiz.filhos[i].filhos[j].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].valor))
             if trie.raiz.filhos[i].filhos[j].filhos.__len__() > 0:
                 for k in range(0, trie.raiz.filhos[i].filhos[j].filhos.__len__()):
-                    print("Filho " + str(i) + str(j) +  str(k) + ":")
+                    print("Filho " + str(i) + str(j) +  str(k))
                     print(str(trie.raiz.filhos[i].filhos[j].filhos[k].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].filhos[k].valor))
 
+
+# Teste de Pesquisa do caminho
+print()
+print("--- Pesquisando o caminho ---")
+a = "she"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "sea"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "coelho"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "he"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "mad"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "sells"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "bola"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "b"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
+a = "sel"
+print(a + ": " + str(trie.pesquisaCaminho(a)))
 
 # Teste de Pesquisa 
 print()
@@ -44,4 +66,12 @@ print(a + ": " + str(trie.pesquisar(a)))
 a = "he"
 print(a + ": " + str(trie.pesquisar(a)))
 a = "mar"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "sells"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "bola"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "b"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "sel"
 print(a + ": " + str(trie.pesquisar(a)))
