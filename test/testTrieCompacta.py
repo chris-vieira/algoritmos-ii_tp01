@@ -8,15 +8,16 @@ print("--- Trie Compacta ---")
 print("Raiz:")
 print(str(trie.raiz.chave) + ": " + str(trie.raiz.valor))
 
-trie.raiz.filhos.append(No('by', 23))
+trie.raiz.filhos.append(No('by', [22]))
 trie.raiz.filhos.append(No('s'))
 trie.raiz.filhos[1].filhos.append(No('he'))
-trie.raiz.filhos[1].filhos[0].filhos.append(No('', 3))
-trie.raiz.filhos[1].filhos[0].filhos.append(No('lls', 20))
+trie.raiz.filhos[1].filhos[0].filhos.append(No('', [0]))
+trie.raiz.filhos[1].filhos[0].filhos.append(No('lls', [14]))
 trie.raiz.filhos[1].filhos.append(No('e'))
-trie.raiz.filhos[1].filhos[1].filhos.append(No('a', [13, 31]))
-trie.raiz.filhos[1].filhos[1].filhos.append(No('lls', 9))
-trie.raiz.filhos.append(No('the', 27))
+trie.raiz.filhos[1].filhos[1].filhos.append(No('a', [10, 28]))
+trie.raiz.filhos[1].filhos[1].filhos.append(No('lls', [7]))
+trie.raiz.filhos.append(No('the', [24]))
+
 
 for i in range(0, trie.raiz.filhos.__len__()):
     print("Filho " + str(i) + ":")
@@ -32,6 +33,15 @@ for i in range(0, trie.raiz.filhos.__len__()):
 
 
 # Teste de Pesquisa 
-print(trie.pesquisar("she"))
-print(trie.pesquisar("sea"))
-print(trie.pesquisar("coelho"))
+print()
+print("--- Pesquisando ---")
+a = "she"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "sea"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "coelho"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "he"
+print(a + ": " + str(trie.pesquisar(a)))
+a = "mar"
+print(a + ": " + str(trie.pesquisar(a)))
