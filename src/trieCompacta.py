@@ -62,3 +62,4 @@ class TrieCompacta:
 
     def remover(self, chave, raiz):
         pass
+    
