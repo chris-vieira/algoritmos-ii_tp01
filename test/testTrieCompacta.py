@@ -111,3 +111,38 @@ print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
 a = "sel"
 trie.inserir(a, b)
 print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+
+
+# Teste de remoção
+print()
+print("--- Remoção ---")
+a = "she"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "sea"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "coelho"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "he"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "mar"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "sells"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "bola"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "b"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+a = "sel"
+trie.remover(a)
+print(a + ": " + str(trie.pesquisar(a)))
+
+print()
+printTrie()
