@@ -19,12 +19,12 @@ class TrieCompacta:
         return r+1
 
     # Retorna um valor i que indica quantas letras da chave foram processadas nos nós pai ao ultimo da lista e uma lista com os indices dos nós partindo da raiz até o nó que possui o valor da chave pesquisada ou deveria possuir o valor da chave (ou seja, a chave pesquisada é menor ou igual a chave do nó) ou o nó pai mais proximo ao nó filho que deveria possuir o valor da chave
-    def pesquisaCaminho(self, chave: str) -> tuple[list[int], int]:
+    def pesquisaCaminho(self, chave) -> tuple[list[int], int]:
         noPai = self.raiz
         # letra atual da chave pesquisada
         i = 0
         r = []
-        while noPai.filhos.__len__() > 0 and i < chave.__len__():
+        while noPai.filhos.__len__() > 0 and i < str(chave).__len__():
             for f in range(0, noPai.filhos.__len__()):
                 noAtual = noPai.filhos[f]
                 # maiorPrefixoComum é menor ou igual a menor chave passada 
@@ -36,11 +36,11 @@ class TrieCompacta:
                     continue
 
                 r.append(f)
-                if  chave[i:].__len__() < noAtual.chave.__len__():
+                if  str(chave)[i:].__len__() < noAtual.chave.__len__():
                     if maiorPrefixoComum > 0:
                         return (r, i)
                     continue
-                elif noAtual.chave.__len__() <  chave[i:].__len__():
+                elif noAtual.chave.__len__() <  str(chave)[i:].__len__():
                     if noAtual.chave.__len__() == maiorPrefixoComum:
                         i += maiorPrefixoComum
                         noPai = noAtual
@@ -50,7 +50,7 @@ class TrieCompacta:
                         # Mas não bateu completamente com a chave
                         return (r, i)
                 else:
-                    if chave[i:].__len__() == maiorPrefixoComum:
+                    if str(chave)[i:].__len__() == maiorPrefixoComum:
                         i += maiorPrefixoComum
                         # O valor pode estar no nó atual ou nos N primeiros filhos sendo N é o número de vezes que a chave pesquisada foi inserida
                         return (r,  i)
@@ -60,20 +60,20 @@ class TrieCompacta:
                         return (r, i)             
         return (r, i)
 
-    def pesquisar(self, chave: str):
+    def pesquisar(self, chave):
         caminho, letrasProcesadas = self.pesquisaCaminho(chave)
     
-        if letrasProcesadas < chave.__len__():
+        if letrasProcesadas < str(chave).__len__():
             return None
         
         noAtual = self.raiz
         for i in range(0, caminho.__len__()):
             noAtual = noAtual.filhos[caminho[i]]
 
-        if self.maiorPrefixo(chave[::-1], noAtual.chave[::-1]) != noAtual.chave.__len__():
+        if self.maiorPrefixo(str(chave)[::-1], str(noAtual.chave)[::-1]) != noAtual.chave.__len__():
             return None
         
-        # No caso do nó não possuir o valor os N primeiro filhos devem possuir
+        # No caso do nó não possuir o valor, os N primeiro filhos devem possuir
         if noAtual.valor == None and noAtual.filhos.__len__() > 0:
             r = []
 
@@ -89,7 +89,6 @@ class TrieCompacta:
             return r
         
         return noAtual.valor
-
 
     def inserir(self, chave, valor):
         caminho, letrasProcesadas = self.pesquisaCaminho(chave)
@@ -129,8 +128,44 @@ class TrieCompacta:
                 else:
                     noAtual.filhos.append(No(str(chave)[maiorPrefixoComum+letrasProcesadas:], valor))
                 return
-        return
+        return -1
 
-    def remover(self, chave, raiz):
-        pass
-    
+    def remover(self, chave):
+        caminho, letrasProcesadas = self.pesquisaCaminho(chave)
+
+        noAtual = self.raiz
+        if letrasProcesadas != str(chave).__len__() :
+            return -1
+
+        nos = [noAtual]
+        for i in range(0, caminho.__len__()):
+            noAtual = noAtual.filhos[caminho[i]]
+            nos.append(noAtual)
+
+        tamNos = nos.__len__()
+        if nos[tamNos-1].filhos.__len__() > 0:
+            for j in range(0, nos[tamNos-1].filhos.__len__()):
+                if nos[tamNos-1].filhos[0].chave == '':
+                    nos[tamNos-1].filhos.pop(0)
+                else:
+                    break
+
+        if nos[tamNos-1].filhos.__len__() == 0:
+            nos[tamNos-2].filhos.pop(caminho[caminho.__len__()-1])
+
+        # Verifica o nó pai(ou o folha com o valor) tem apenas um filho e os une
+        if nos[tamNos-1].filhos.__len__() == 1:
+            nos[tamNos-1].chave = str(nos[tamNos-1].chave) + str(nos[tamNos-1].filhos[0].chave)
+            nos[tamNos-1].valor = nos[tamNos-1].filhos[0].valor
+            filhosAux = nos[tamNos-1].filhos[0].filhos
+            nos[tamNos-1].filhos.pop(0)
+            nos[tamNos-1].filhos = filhosAux
+
+        # Verifica o nó vo(ou o pai) tem apenas um filho e os une
+        if nos[tamNos-2].filhos.__len__() == 1:
+            nos[tamNos-2].chave = str(nos[tamNos-2].chave) + str(nos[tamNos-2].filhos[0].chave)
+            nos[tamNos-2].valor = nos[tamNos-2].filhos[0].valor
+            filhosAux = nos[tamNos-2].filhos[0].filhos
+            nos[tamNos-2].filhos.pop(0)
+            nos[tamNos-2].filhos = filhosAux
+        return
