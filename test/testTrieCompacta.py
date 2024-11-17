@@ -3,33 +3,37 @@ sys.path.append('../src')
 
 from trieCompacta import *
 
+def printTrie():
+    print("--- Trie Compacta ---")
+    print("Raiz")
+    print(str(trie.raiz.chave) + ": " + str(trie.raiz.valor))
+    for i in range(0, trie.raiz.filhos.__len__()):
+        print("Filho " + str(i) )
+        print(str(trie.raiz.filhos[i].chave) + ": " + str(trie.raiz.filhos[i].valor))
+        if trie.raiz.filhos[i].filhos.__len__() > 0:
+            for j in range(0, trie.raiz.filhos[i].filhos.__len__()):
+                print("Filho " + str(i) + str(j))
+                print(str(trie.raiz.filhos[i].filhos[j].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].valor))
+                if trie.raiz.filhos[i].filhos[j].filhos.__len__() > 0:
+                    for k in range(0, trie.raiz.filhos[i].filhos[j].filhos.__len__()):
+                        print("Filho " + str(i) + str(j) +  str(k))
+                        print(str(trie.raiz.filhos[i].filhos[j].filhos[k].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].filhos[k].valor))
+                        if trie.raiz.filhos[i].filhos[j].filhos[k].filhos.__len__() > 0:
+                            for l in range(0, trie.raiz.filhos[i].filhos[j].filhos[k].filhos.__len__()):
+                                print("Filho " + str(i) + str(j) +  str(k) +  str(l))
+                                print(str(trie.raiz.filhos[i].filhos[j].filhos[k].filhos[l].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].filhos[k].filhos[l].valor))
+
 trie = TrieCompacta()
-print("--- Trie Compacta ---")
-print("Raiz")
-print(str(trie.raiz.chave) + ": " + str(trie.raiz.valor))
-
-trie.raiz.filhos.append(No('by', [22]))
-trie.raiz.filhos.append(No('s'))
-trie.raiz.filhos[1].filhos.append(No('he'))
-trie.raiz.filhos[1].filhos[0].filhos.append(No('', [0]))
-trie.raiz.filhos[1].filhos[0].filhos.append(No('lls', [14]))
-trie.raiz.filhos[1].filhos.append(No('e'))
-trie.raiz.filhos[1].filhos[1].filhos.append(No('a', [10, 28]))
-trie.raiz.filhos[1].filhos[1].filhos.append(No('lls', [7]))
-trie.raiz.filhos.append(No('the', [24]))
+trie.inserir('by', 21)
+trie.inserir('she', 0)
+trie.inserir('sea', 10)
+trie.inserir('sells', 4)
+trie.inserir('shells', 14)
+trie.inserir('the', 24)
+trie.inserir('sea', 28)
 
 
-for i in range(0, trie.raiz.filhos.__len__()):
-    print("Filho " + str(i) )
-    print(str(trie.raiz.filhos[i].chave) + ": " + str(trie.raiz.filhos[i].valor))
-    if trie.raiz.filhos[i].filhos.__len__() > 0:
-        for j in range(0, trie.raiz.filhos[i].filhos.__len__()):
-            print("Filho " + str(i) + str(j))
-            print(str(trie.raiz.filhos[i].filhos[j].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].valor))
-            if trie.raiz.filhos[i].filhos[j].filhos.__len__() > 0:
-                for k in range(0, trie.raiz.filhos[i].filhos[j].filhos.__len__()):
-                    print("Filho " + str(i) + str(j) +  str(k))
-                    print(str(trie.raiz.filhos[i].filhos[j].filhos[k].chave) + ": " + str(trie.raiz.filhos[i].filhos[j].filhos[k].valor))
+printTrie()
 
 
 # Teste de Pesquisa do caminho
@@ -75,3 +79,35 @@ a = "b"
 print(a + ": " + str(trie.pesquisar(a)))
 a = "sel"
 print(a + ": " + str(trie.pesquisar(a)))
+
+# Teste de Inserção 
+print()
+print("--- Inserção ---")
+a = "she"
+b = 55
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "sea"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "coelho"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "he"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "mar"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "sells"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "bola"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "b"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
+a = "sel"
+trie.inserir(a, b)
+print(a + ", " + str(b) + ": " + str(trie.pesquisar(a)))
