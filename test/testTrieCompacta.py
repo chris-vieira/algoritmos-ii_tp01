@@ -1,7 +1,7 @@
 import sys
-sys.path.append('../src')
+sys.path.append('./source')
 
-from trieCompacta import *
+from trie.trieCompacta import TrieCompacta
 
 def printTrie():
     print("--- Trie Compacta ---")
