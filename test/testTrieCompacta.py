@@ -40,23 +40,23 @@ printTrie()
 print()
 print("--- Pesquisando o caminho ---")
 a = "she"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "sea"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "coelho"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "he"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "mad"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "sells"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "bola"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "b"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 a = "sel"
-print(a + ": " + str(trie.pesquisaCaminho(a)))
+print(a + ": " + str(trie._pesquisaCaminho(a)))
 
 # Teste de Pesquisa 
 print()

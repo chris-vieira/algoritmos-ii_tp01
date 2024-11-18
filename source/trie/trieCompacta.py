@@ -8,7 +8,16 @@ class TrieCompacta:
     def __init__(self) -> None:
         self.raiz = No()
 
-    def maiorPrefixo(self, a: str, b: str) -> int:
+    def __getitem__(self, chave):
+        return self.pesquisar(chave)
+
+    def __setitem__(self, chave, valor):
+        return self.inserir(chave, valor)
+
+    def get(self, chave, default=None):
+        return self.pesquisar(chave, default)
+
+    def _maiorPrefixo(self, a: str, b: str) -> int:
         r = -1
         # Tamanho da menor palavra recebida
         rep = min(a.__len__(), b.__len__())
@@ -19,7 +28,7 @@ class TrieCompacta:
         return r+1
 
     # Retorna um valor i que indica quantas letras da chave foram processadas nos nós pai ao ultimo da lista e uma lista com os indices dos nós partindo da raiz até o nó que possui o valor da chave pesquisada ou deveria possuir o valor da chave (ou seja, a chave pesquisada é menor ou igual a chave do nó) ou o nó pai mais proximo ao nó filho que deveria possuir o valor da chave
-    def pesquisaCaminho(self, chave) -> tuple[list[int], int]:
+    def _pesquisaCaminho(self, chave) -> tuple[list[int], int]:
         noPai = self.raiz
         # letra atual da chave pesquisada
         i = 0
@@ -28,7 +37,7 @@ class TrieCompacta:
             for f in range(0, noPai.filhos.__len__()):
                 noAtual = noPai.filhos[f]
                 # maiorPrefixoComum é menor ou igual a menor chave passada 
-                maiorPrefixoComum = self.maiorPrefixo(str(noAtual.chave), str(chave)[i:])
+                maiorPrefixoComum = self._maiorPrefixo(str(noAtual.chave), str(chave)[i:])
 
                 if maiorPrefixoComum <= 0:
                     if f+1 == noPai.filhos.__len__():
@@ -40,7 +49,7 @@ class TrieCompacta:
                     if maiorPrefixoComum > 0:
                         return (r, i)
                     continue
-                elif noAtual.chave.__len__() <  str(chave)[i:].__len__():
+                elif noAtual.chave.__len__() < str(chave)[i:].__len__():
                     if noAtual.chave.__len__() == maiorPrefixoComum:
                         i += maiorPrefixoComum
                         noPai = noAtual
@@ -60,18 +69,18 @@ class TrieCompacta:
                         return (r, i)             
         return (r, i)
 
-    def pesquisar(self, chave):
-        caminho, letrasProcesadas = self.pesquisaCaminho(chave)
+    def pesquisar(self, chave, default=None):
+        caminho, letrasProcesadas = self._pesquisaCaminho(chave)
     
         if letrasProcesadas < str(chave).__len__():
-            return None
+            return default
         
         noAtual = self.raiz
         for i in range(0, caminho.__len__()):
             noAtual = noAtual.filhos[caminho[i]]
 
-        if self.maiorPrefixo(str(chave)[::-1], str(noAtual.chave)[::-1]) != noAtual.chave.__len__():
-            return None
+        if self._maiorPrefixo(str(chave)[::-1], str(noAtual.chave)[::-1]) != noAtual.chave.__len__():
+            return default
         
         # No caso do nó não possuir o valor, os N primeiro filhos devem possuir
         if noAtual.valor == None and noAtual.filhos.__len__() > 0:
@@ -91,17 +100,19 @@ class TrieCompacta:
         return noAtual.valor
 
     def inserir(self, chave, valor):
-        caminho, letrasProcesadas = self.pesquisaCaminho(chave)
+        caminho, letrasProcesadas = self._pesquisaCaminho(chave)
 
         noAtual = self.raiz
         if letrasProcesadas == 0 and caminho == []:
             noAtual.filhos.append(No(chave, valor))
             return
 
+        chaveProcessada = ''
         for i in range(0, caminho.__len__()):
             noAtual = noAtual.filhos[caminho[i]]
+            chaveProcessada += noAtual.chave
 
-        maiorPrefixoComum = self.maiorPrefixo(str(noAtual.chave), str(chave)[letrasProcesadas:])
+        maiorPrefixoComum = self._maiorPrefixo(chaveProcessada, str(chave)) - letrasProcesadas
 
         if maiorPrefixoComum == 0:
             if noAtual.filhos.__len__() == 0:
@@ -115,6 +126,9 @@ class TrieCompacta:
             return
 
         if maiorPrefixoComum > 0:
+            if str(noAtual.chave).__len__() == maiorPrefixoComum:
+                print("ERRO: Inserção não está funcionando corretamente")
+
             if str(noAtual.chave).__len__() > maiorPrefixoComum:
                 filhosAux = noAtual.filhos
                 noAtual.filhos = []
@@ -131,7 +145,7 @@ class TrieCompacta:
         return -1
 
     def remover(self, chave):
-        caminho, letrasProcesadas = self.pesquisaCaminho(chave)
+        caminho, letrasProcesadas = self._pesquisaCaminho(chave)
 
         noAtual = self.raiz
         if letrasProcesadas != str(chave).__len__() :
