@@ -2,7 +2,7 @@ import os
 import sys
 import argparse
 
-from lzw import LZW
+from lzwTrie import LZW
 
 def file_permission_mask(file: str) -> int:
     return permission_mask(os.stat(file))
