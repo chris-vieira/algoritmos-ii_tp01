@@ -1,42 +1,38 @@
-# algoritmos-ii_tp01
-Algoritmos II - TP01 - Manipulação de Sequências
+# Algoritmos II - TP01 - Manipulação de Sequências
 
-### Executando testes:
+### **Alunos:** Marcos Paulo Ferreria de Souza, Christian David Costa Vieira
 
-Para executar os teste entre na pasta ./test pelo terminal e execute o comando 
+## Introdução
 
-> python3 < nome-do-arquivo-de-teste >
+Este relatório apresenta a implementação de um algoritmo de compressão e de uma estrutura de dados. O algoritmo de compressão elaborado é o LZW, que funciona identificando os padrões repetidos em um arquivo e os substituindo por identificadores únicos, gerando assim uma versão comprimida do arquivo. A Trie Compacta, usada para otimizar a compressão, é uma estrutura de dados que armazena de maneira eficiente e compacta os padrões e identificadores gerados pelo algoritmo.
 
-### Convenções de commit:
+## Implementação
 
-https://medium.com/linkapi-solutions/conventional-commits-pattern-3778d1a1e657
+Para realizar a implementação foi utilizado a linguagem de programação Python. Quatro arquivos distintos foram criados para organizar e facilitar a escrita do programa. O arquivo que será executado é o “main.py” que processa as entradas e chama o “lzw.py” que realiza a compressão.A leitura do arquivo de entrada é feita utilizando o “io_manip.py” e o “trieCompacta.py” é usado para armazenar os padrões e os identificadores usados na compressão e a descompressão. A lógica e as decisões que foram feitas na escrita dos códigos “lzw.py” e o “trieCompacta.py” serão explicados nas próximas seções.
+
+## LZW
+
+O algoritmo de compressão foi implementado no arquivo “lzw.py”. O funcionamento do algoritmo se dá pela leitura dos bytes do arquivo de entrada e pela associação desses bytes a identificadores que serão registrados no arquivo comprimido. Sendo que os bytes são associados em sequências que se repetem ao longo do arquivo, ou seja, uma sequência de bytes possui um identificador único e sempre que essa sequência se repetir no arquivo ela será substituída pelo mesmo identificador. Os identificadores associados a apenas uma sequência garante que a compressão seja reversível. A descompressão segue a mesma lógica mas de forma inversa, todo identificador lido do arquivo é traduzido pelo padrão que ele identifica, assim reconstruindo o arquivo original.
+
+## Trie Compacta
+
+A Trie Compacta foi implementada como uma árvore composta por nós que possuem apenas três campos, a chave, o valor e uma lista de nós filhos. Por definição, a Trie Compacta é uma árvore de prefixos, por tanto cada nó vai ter como chave o maior prefixo compartilhado entre os seus nós filhos e apenas as folhas vão possuir valores. Seguindo essas definições foram implementadas as funções de inserção, remoção e pesquisa de chaves na árvore. Caso a mesma chave seja inserida mais de uma vez, ela irá possuir como os seus N primeiros filhos, sendo N o número de vezes que a chave foi inserida na árvore, nós com a chave vazia e que possuem os valores associados a chave nas diferentes inserções. Caso uma chave que foi inserida mais de uma vez seja removida todos os valores associados a ela serão removidos, ou seja, independentemente de quantas vezes uma chave foi inserida na árvore ao ser removido todos os valores associados a ela serão retirados da árvore.
+
+## Resultados
+
+Foram feitos dois testes, o primeiro com um arquivo .txt com 4.2 MB e o segundo com um arquivo .tiff com 0.85 MB. Os arquivos foram comprimidos com uma taxa de compressão no melhor caso de 3.00, comparável com implementações padrões como a do gzip. A descompressão foi feita com sucesso retornando o mesmo arquivo que foi passado na entrada do algoritmo.
+
+| Compressor | Algoritmo        | Arquivo        | Num de bits  | Razão de Compressão (%) | 
+| ---------- | ---------------- | -------------- | ------------ | ----------------------- | 
+| gzip       | LZW + Huffman    | BIBLIA.txt     |              |  3.00                   | 
+| tp01-lzw   | LZW              | BIBLIA.txt     | 9            |  1.35                   | 
+| tp01-lzw   | LZW              | BIBLIA.txt     | 12           |  2.10                   | 
+| tp01-lzw   | LZW              | BIBLIA.txt     | 15           |  2.47                   | 
+| tp01-lzw   | LZW              | BIBLIA.txt     | 18           |  3.00                   |
+| tp01-lzw   | LZW              | BIBLIA.txt     | 20           |  3.00                   |
+| tp01-lzw   | LZW              | BIBLIA.txt     | sem limite   |  3.00                   |
+
+A Figura abaixo exibe o gráfico com a razão de compressão para o arquivo .txt BIBLIA.txt de 4.2MB. Pode-se observar que com a quantidade de bits elevada, a taxa aproxima-se da taxa obtida de compactadores padrões amplamente utilizado, como é o caso do gzip.
 
 
-
-## 
-
-No OS GNU/Linux, diversos utilitários de compressão utilizam  *LZW (Lempel-Ziv-Welch)* ou variantes do algoritmo *LZW*. Abaixo estão alguns dos compressores mais conhecidos:
-
-| Compressor/Descompressor | Algoritmo                     | Extensão   | Comando de Compressão      | Comando de Descompressão      |
-|--------------------------|-------------------------------|------------|----------------------------|-------------------------------|
-| gzip                     | LZW + Huffman                 | `.gz`      | `gzip arquivo.txt`         | `gunzip arquivo.txt.gz`       |
-| compress                 | LZW                           | `.Z`       | `compress arquivo.txt`     | `uncompress arquivo.txt.Z`    |
-| xz                       | LZMA (LZ77 variante)          | `.xz`      | `xz arquivo.txt`           | `unxz arquivo.txt.xz`         |
-| lzma                     | LZ77                          | `.lzma`    | `lzma arquivo.txt`         | `unlzma arquivo.txt.lzma`     |
-| lzip                     | LZMA                          | `.lz`      | `lzip arquivo.txt`         | `unlzip arquivo.txt.lz`       |
-| p7zip                    | LZMA/LZ77/LZW                 | `.7z`      | `7z a arquivo.7z arquivo`  | `7z x arquivo.7z`             |
-| bzip2                    | Burrows-Wheeler + Huffman     | `.bz2`     | `bzip2 arquivo.txt`        | `bunzip2 arquivo.txt.bz2`     |
-| lrzip                    | LZ77 + otimizações            | `.lrz`     | `lrzip arquivo.txt`        | `lrunzip arquivo.txt.lrz`     |
-| lz4                      | LZ77 (compressão rápida)      | `.lz4`     | `lz4 arquivo.txt`          | `unlz4 arquivo.txt.lz4`       |
-| zstd                     | LZ77 + Huffman                | `.zst`     | `zstd arquivo.txt`         | `unzstd arquivo.txt.zst`      |
-| rar/unrar                | LZ77                          | `.rar`     | `rar a arquivo.rar arquivo`| `unrar x arquivo.rar`         |
-| cpio                     | Vários (combinado com gzip)   | `.cpio`    | `cpio -o > arquivo.cpio`   | `cpio -i < arquivo.cpio`      |
-| ar                       | Nenhum (empacotador)          | `.a`       | `ar r arquivo.a arquivos`  | `ar x arquivo.a`              |
-
-
-### Considerações:
-**Licenciamento e patentes:** O algoritmo *LZW* foi patenteado, e algumas implementações do *LZW* (como o compress) podem ter questões relacionadas a licenciamento devido a essas patentes. Isso fez com que alternativas como gzip e xz, que usam variantes do LZ77 ou LZMA, se tornassem mais populares.
-
-**Desempenho e Taxa de Compressão:** Ferramentas como gzip e xz geralmente oferecem um bom equilíbrio entre desempenho de compressão/descompressão e taxa de compressão, enquanto outras como lzma e 7zip podem atingir taxas de compressão mais altas, mas com um custo de maior uso de CPU e tempo de processamento.
-
-Esses algoritmos são amplamente utilizados no ecossistema Linux e Unix para compressão de arquivos, cada um com suas características de desempenho e adequação a diferentes cenários de uso.
+<img title="Razão de Compressão" src="/doc/razao-de-compressao-biblia.png">
