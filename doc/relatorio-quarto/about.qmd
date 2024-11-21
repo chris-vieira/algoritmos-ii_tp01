@@ -1,0 +1,7 @@
+---
+title: "Resultados"
+---
+
+Grafico da Razão da compressão
+
+![](../razao-de-compressao-biblia.png){width=100%}

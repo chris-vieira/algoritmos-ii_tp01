@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html#resultados",
+    "href": "index.html#resultados",
+    "title": "Trabalho Prático 1",
+    "section": "Resultados",
+    "text": "Resultados\nForam feitos dois testes, o primeiro com um arquivo .txt com 4.2 MB e o segundo com um arquivo .tiff com 0.85 MB. Os arquivos foram comprimidos com uma taxa de compressão no melhor caso de 3.00, comparável com implementações padrões como a do gzip. A descompressão foi feita com sucesso retornando o mesmo arquivo que foi passado na entrada do algoritmo. O grafico com mais dados retirados dos testes está na pagina Resultados"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Resultados",
+    "section": "",
+    "text": "Grafico da Razão da compressão"
+  }
+]
