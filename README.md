@@ -36,3 +36,11 @@ A Figura abaixo exibe o gráfico com a razão de compressão para o arquivo .txt
 
 
 <img title="Razão de Compressão" src="/doc/razao-de-compressao-biblia.png">
+
+## Conclusão
+
+A implementação do algoritmo de compressão LZW e da Trie Compacta demonstrou ser uma solução eficiente para a compressão e descompressão de arquivos. O uso da Trie Compacta otimizou o armazenamento e a manipulação dos padrões repetidos, enquanto o LZW garantiu uma compressão reversível e competitiva em termos de taxa de compressão, conforme evidenciado pelos testes realizados.
+
+Os resultados obtidos mostraram que a taxa de compressão alcançada é comparável a padrões amplamente utilizados, como o gzip, especialmente quando a quantidade de bits é elevada. Isso destaca o potencial da solução proposta para aplicações práticas em contextos que exigem compressão eficiente e confiável.
+
+Por fim, a modularidade do código, organizada em arquivos distintos, contribuiu para a clareza e manutenção do projeto, facilitando futuras expansões ou ajustes. Esta abordagem reforça o sucesso da implementação, tanto em aspectos técnicos quanto em organização de software.
