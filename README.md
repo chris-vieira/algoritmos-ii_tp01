@@ -34,8 +34,14 @@ Foram feitos dois testes, o primeiro com um arquivo .txt com 4.2 MB e o segundo 
 
 A Figura abaixo exibe o gráfico com a razão de compressão para o arquivo .txt BIBLIA.txt de 4.2MB. Pode-se observar que com a quantidade de bits elevada, a taxa aproxima-se da taxa obtida de compactadores padrões amplamente utilizado, como é o caso do gzip.
 
-
 <img title="Razão de Compressão" src="/doc/razao-de-compressao-biblia.png">
+
+## Melhorias
+O tempo para compressão e descompressão utilizando árvore Trie Compacta foi muito além do esperado, demorando cerca de 7.5 min. em média para compressão e descompressão! O tempo elevado se deu em razão de cada valor do nodo da árvore Trie Compacta ser armazenado em uma lista. Verificando outras possibilidades de containers, pode-se perceber que o do tipo dicionário seria o mais adequado para esse caso. Testes iniciais realizados mostraram-se promissores, mas devido ao tempo necessário para reescrever e debug completo, não foi possível completar a refatoração.
+
+Um outro caso que poderá ser melhorado consiste na leitura de chuncks do arquivo de entrada e escrita de chunks no arquivo de saída, tendo como base a informação disposnibilizada pelo OS acerca da geometria do disco (memória de massa). Isso de certo modo poderia trazer impactos positivos no caso de arquivos muito grandes.
+
+Acerca de boas práticas de engenharia de software, a adoção de padrões de projeto como o Template poderia ser benéfico para extender a possibilidade de avaliações de outras implementações de containers (neste contexto, container é a implementação que contém os dados do arquivo de compressão/descompressão), como é o caso exposto anteriormente para avaliação de uma estrutura de dados para armazenamento dos valores dos nós ou mesmo avaliações de outros tipos de estruturas do tipo Tries .
 
 ## Conclusão
 
